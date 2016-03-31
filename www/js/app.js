@@ -38,7 +38,7 @@ var app = {
 
         for(var i = 0; i < pokemons.length; i++) {
             var pokemon = pokemons[i];
-            pokelist.append('<li><img src="' + pokemon.image + '"/><a href="#page">' + pokemon.name + '</a></li>');
+            pokelist.append('<li><a href="#page"><img src="' + pokemon.image + '"/>' + pokemon.name + '</a></li>');
         }
         pokelist.listview("refresh");
         this.updating = false;
