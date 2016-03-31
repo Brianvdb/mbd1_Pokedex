@@ -56,7 +56,7 @@ var app = {
             $.mobile.loading("show", {
                 text: "loading more...",
                 textVisible: true,
-                theme: 'z'
+                theme: 'b'
             });
         }
     }
