@@ -45,7 +45,7 @@ var app = {
     },
     onSrollChange: function(element) {
         if (this.updating) return;
-        
+
         if ($(element).scrollTop() + $(element).height() >= ($(document).height() - 50)) {
             this.updating = true;
             this.listOffset += 30;
