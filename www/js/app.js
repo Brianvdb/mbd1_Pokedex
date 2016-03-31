@@ -42,6 +42,7 @@ var app = {
         }
         pokelist.listview("refresh");
         this.updating = false;
+        $.mobile.loading("hide");
     },
     onSrollChange: function(element) {
         if (this.updating) return;
@@ -51,6 +52,12 @@ var app = {
             this.listOffset += 30;
             var self = this;
             this.api.getPokemons(this.listOffset, function(data) { self.pokemonsReceived(data) });
+
+            $.mobile.loading("show", {
+                text: "loading more...",
+                textVisible: true,
+                theme: 'z'
+            });
         }
     }
 };
