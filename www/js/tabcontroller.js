@@ -1,8 +1,8 @@
 /**
  * Created by Gebruiker on 1-4-2016.
  */
-function TabController() {
-
+function TabController(catchcontroller) {
+    this.catchcontroller = catchcontroller;
 }
 
 TabController.prototype = {
@@ -15,6 +15,8 @@ TabController.prototype = {
         $(document).on("swipeleft swiperight", function (event) {
             self.onSwipe(event)
         });
+
+        $('[data-role="navbar"] a').click(function() {self.onTabChanged(this); });
     },
     onSwipe: function (event) {
         this.changeNavTab(event.type == 'swipeleft');
@@ -31,5 +33,11 @@ TabController.prototype = {
             nextidx = curidx - 1;
         }
         $tabs.eq(nextidx).click();
+    },
+    onTabChanged: function(element) {
+        var tab = $(element).attr('href');
+        if(tab == '#tab2') {
+            this.catchcontroller.init();
+        }
     }
 }
