@@ -24,9 +24,11 @@ TabController.prototype = {
         var curidx = $tabs.closest("a.ui-btn-active").parent().index();
         var nextidx = 0;
         if (left) {
-            nextidx = (curidx == $tabs.length - 1) ? 0 : curidx + 1;
+            if(curidx == $tabs.length - 1) return;
+            nextidx = curidx + 1;
         } else {
-            nextidx = (curidx == 0) ? $tabs.length - 1 : curidx - 1;
+            if(curidx == 0) return;
+            nextidx = curidx - 1;
         }
         $tabs.eq(nextidx).click();
     }
