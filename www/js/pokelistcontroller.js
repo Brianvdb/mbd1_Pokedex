@@ -27,7 +27,7 @@ PokelistController.prototype = {
         pokelist.listview("refresh");
         this.updating = false;
         $.mobile.loading("hide");
-        this.tabcontroller.addListeners();
+        //this.tabcontroller.addListeners();
 
     },
     onSrollChange: function() {
