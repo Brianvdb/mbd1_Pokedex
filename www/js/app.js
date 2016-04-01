@@ -3,7 +3,7 @@ var app = {
     initialize: function() {
         this.api = new API();
         this.tabcontroller = new TabController();
-        this.pokelistcontroller = new PokelistController(this.api, this.tabcontroller);
+        this.pokelistcontroller = new PokelistController(this.api);
         this.pokemoncontroller = new PokemonController(this.api);
         this.bindEvents();
         this.listOffset = 0;

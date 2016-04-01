@@ -2,9 +2,8 @@
  * Created by Gebruiker on 1-4-2016.
  */
 
-function PokelistController(api, tabcontroller) {
+function PokelistController(api) {
     this.api = api;
-    this.tabcontroller = tabcontroller;
 }
 
 PokelistController.prototype = {

@@ -17,7 +17,7 @@ TabController.prototype = {
         });
     },
     onSwipe: function (event) {
-        this.changeNavTab(event.type == 'swiperight');
+        this.changeNavTab(event.type == 'swipeleft');
     },
     changeNavTab: function (left) {
         var $tabs = $("div[data-role=navbar] li a", $("div[data-role=page].ui-page-active"));
