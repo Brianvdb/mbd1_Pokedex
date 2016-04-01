@@ -19,8 +19,15 @@ API.prototype = {
                 if(urlparts && urlparts.length > 0) {
                     var number = urlparts[urlparts.length - 2];
                     pokemon.image = self.imageurl + number + '.png';
+                    pokemon.id = number;
+
                 }
             }
+            callback(data);
+        });
+    },
+    getPokemon: function(url, callback) {
+        $.getJSON(url, function(data) {
             callback(data);
         });
     }

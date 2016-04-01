@@ -2,15 +2,22 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.api = new API();
+        this.tabcontroller = new TabController();
+        this.pokelistcontroller = new PokelistController(this.api, this.tabcontroller);
+        this.pokemoncontroller = new PokemonController(this.api);
         this.bindEvents();
         this.listOffset = 0;
+
+        $.urlParam = this.getParameterByName;
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
+        var self = this;
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        $(document).on("pagecontainerbeforeshow", function(event, ui) { self.onPageLoaded(event, ui) });
     },
     // deviceready Event Handler
     //
@@ -21,43 +28,28 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var self = this;
-
-        $(window).bind('scroll', function() { self.onSrollChange(this) });
-
-        this.updating = true;
-        this.api.getPokemons(this.listOffset, function(data) { self.pokemonsReceived(data) });
-
-        console.log('Received Event: ' + id);
-    },
-    pokemonsReceived: function(data) {
-        var pokemons = data.results;
-
-
-        var pokelist = $('#pokelist');
-
-        for(var i = 0; i < pokemons.length; i++) {
-            var pokemon = pokemons[i];
-            pokelist.append('<li><a href="#page"><img src="' + pokemon.image + '"/>' + pokemon.name + '</a></li>');
+        if (id == 'deviceready') {
+            this.tabcontroller.init();
+            this.pokelistcontroller.init();
         }
-        pokelist.listview("refresh");
-        this.updating = false;
-        $.mobile.loading("hide");
     },
-    onSrollChange: function(element) {
-        if (this.updating) return;
-
-        if ($(element).scrollTop() + $(element).height() >= ($(document).height() - 50)) {
-            this.updating = true;
-            this.listOffset += 30;
-            var self = this;
-            this.api.getPokemons(this.listOffset, function(data) { self.pokemonsReceived(data) });
-
-            $.mobile.loading("show", {
-                text: "loading more...",
-                textVisible: true,
-                theme: 'b'
-            });
+    onPageLoaded: function(event, ui) {
+        var id = ui.toPage[0].id;
+        console.log('page: ' + id);
+        if ( ui.toPage[0].id == 'pokemonview') {
+            var url = ui.toPage.data('url');
+            var name = $.urlParam(url, 'name');
+            var apiUrl = $.urlParam(url, 'url');
+            var id = $.urlParam(url, 'id');
+            this.pokemoncontroller.loadPokemon(name, id, apiUrl);
+        }
+    },
+    getParameterByName: function(url, name) {
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(url);
+        if (results == null) {
+            return null;
+        } else {
+            return decodeURI(results[1]) || 0;
         }
     }
 };
