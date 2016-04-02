@@ -14,7 +14,7 @@
 <div data-role="page" id="home">
     <div data-role="tabs">
         <div data-role="header">
-            <!--<button href="#" class="ui-btn-right" data-icon="gear"></button>-->
+            <a href="settings.html" class="ui-btn-right" data-icon="gear">Settings</a>
             <h1 id="header-title">Pokedex</h1>
             <div data-role="navbar">
                 <ul>
@@ -31,7 +31,9 @@
         </div>
         <div data-role="tab" class="ui-content" id="tab2">
             <p id="location"></p>
-            <p id="foundpokemon"></p>
+            <ul data-role="listview" id="catchlist">
+
+            </ul>
         </div>
         <div data-role="tab" class="ui-content" id="tab3">
             <h1>Dit is tab 3</h1>
@@ -45,6 +47,7 @@
 <script type="text/javascript" src="js/pokemoncontroller.js"></script>
 <script type="text/javascript" src="js/tabcontroller.js"></script>
 <script type="text/javascript" src="js/catchcontroller.js"></script>
+<script type="text/javascript" src="js/databasecontroller.js"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
 <script type="text/javascript">

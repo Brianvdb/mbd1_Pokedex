@@ -2,9 +2,10 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.api = new API();
+        this.databasecontroller = new DatabaseController();
         this.pokelistcontroller = new PokelistController(this.api);
         this.pokemoncontroller = new PokemonController(this.api);
-        this.catchcontroller = new CatchController();
+        this.catchcontroller = new CatchController(this.api, this.databasecontroller);
 
         this.tabcontroller = new TabController(this.catchcontroller);
         this.bindEvents();
@@ -22,6 +23,7 @@ var app = {
         $(document).on("pagecontainerbeforeshow", function(event, ui) { self.onPageLoaded(event, ui) });
     },
     onDeviceReady: function() {
+        this.databasecontroller.init();
         this.tabcontroller.init();
         this.pokelistcontroller.init();
     },

@@ -2,8 +2,8 @@
  * Created by Brian on 31-3-2016.
  */
 function API() {
-    this.baseurl = "http://pokeapi.co/api/v2/pokemon/"
-    this.imageurl = "http://pokeapi.co/media/sprites/pokemon/"
+    this.baseurl = "http://pokeapi.co/api/v2/pokemon/";
+    this.imageurl = "http://pokeapi.co/media/sprites/pokemon/";
 }
 
 API.prototype = {
@@ -18,7 +18,7 @@ API.prototype = {
                 var urlparts = pokemon.url.split("/");
                 if(urlparts && urlparts.length > 0) {
                     var number = urlparts[urlparts.length - 2];
-                    pokemon.image = self.imageurl + number + '.png';
+                    pokemon.image = self.getPokemonImageUrl(number);
                     pokemon.id = number;
 
                 }
@@ -30,5 +30,11 @@ API.prototype = {
         $.getJSON(url, function(data) {
             callback(data);
         });
+    },
+    getPokemonUrl: function(id) {
+        return this.baseurl + id;
+    },
+    getPokemonImageUrl: function(id) {
+        return this.imageurl + id + '.png';
     }
 }
