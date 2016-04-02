@@ -1,9 +1,10 @@
 /**
  * Created by Brian on 31-3-2016.
  */
-function API() {
+function API(app) {
     this.baseurl = "http://pokeapi.co/api/v2/pokemon/";
     this.imageurl = "http://pokeapi.co/media/sprites/pokemon/";
+    this.app = app;
 }
 
 API.prototype = {
@@ -23,7 +24,8 @@ API.prototype = {
 
                 }
             }
-            callback(data);
+            self.app.databasecontroller.cachePokemons(results);
+            callback(results);
         });
     },
     getPokemon: function(url, callback) {

@@ -1,8 +1,8 @@
 /**
  * Created by Gebruiker on 1-4-2016.
  */
-function DatabaseController() {
-
+function DatabaseController(api) {
+    this.api = api;
 }
 
 DatabaseController.prototype = {
@@ -11,8 +11,9 @@ DatabaseController.prototype = {
         var self = this;
         this.db.transaction(function(trans) {
             trans.executeSql("CREATE TABLE IF NOT EXISTS secretpokemon (lat, lng, pokemon_id, pokemon_name, location, found)");
+            trans.executeSql("CREATE TABLE IF NOT EXISTS pokemon (id, name, base_experience, height, is_default, order_nr, weight)");
             self.getSecretPokemons(); // populates data if table is empty
-        });
+        }, function(err) { console.log(err.message )});
     },
 
     getSecretPokemons: function(callback) {
@@ -64,5 +65,37 @@ DatabaseController.prototype = {
             trans.executeSql('UPDATE secretpokemon SET found=1 WHERE pokemon_id=?', [pokemon.pokemon_id]);
             self.getSecretPokemons(callback);
         });
+    },
+
+    cachePokemons: function(pokemons) {
+        var self = this;
+        this.db.transaction(function(trans) {
+            for(var i = 0; i < pokemons.length; i++) {
+                var pokemon = pokemons[i];
+                trans.executeSql('INSERT INTO pokemon (id, name) VALUES (?,?)', [pokemon.id, pokemon.name]);
+            }
+        });
+    },
+
+    getPokemons: function(callback, offset) {
+        var self = this;
+        this.db.transaction(function(trans) {
+            trans.executeSql('SELECT id, name FROM pokemon LIMIT ?,30', [offset], function(trans, results) {
+                var length = results.rows.length;
+                if(length == 0) {
+                    callback(undefined);
+                } else {
+                    var pokemons = [];
+                    for (var i = 0; i < length; i++) {
+                        var pokemon = results.rows.item(i);
+                        pokemon.url = self.api.getPokemonUrl(pokemon.id);
+                        pokemon.image = self.api.getPokemonImageUrl(pokemon.id);
+                        pokemons[i] = pokemon;
+                    }
+                    callback(pokemons);
+                }
+
+            });
+        }, function(err) { console.log(err.message); });
     }
 }

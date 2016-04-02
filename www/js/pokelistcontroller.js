@@ -2,8 +2,9 @@
  * Created by Gebruiker on 1-4-2016.
  */
 
-function PokelistController(api) {
+function PokelistController(api, databasecontroller) {
     this.api = api;
+    this.databasecontroller = databasecontroller;
 }
 
 PokelistController.prototype = {
@@ -11,11 +12,26 @@ PokelistController.prototype = {
         var self = this;
 
         this.updating = true;
-        this.api.getPokemons(this.listOffset, function(data) { self.pokemonsReceived(data) });
+        this.listOffset = 0;
+        this.fetchPokemons();
         $(document).on("scrollstop", function(e) { self.onSrollChange(e) });
     },
-    pokemonsReceived: function(data) {
-        var pokemons = data.results;
+    fetchPokemons: function() {
+        var self = this;
+
+        console.log('database get pokemons');
+        this.databasecontroller.getPokemons(function(pokemons) {
+            console.log('database callback');
+            if(pokemons) {
+                self.pokemonsReceived(pokemons);
+            } else {
+                self.api.getPokemons(self.listOffset, function(data) { self.pokemonsReceived(data) });
+            }
+        }, this.listOffset);
+
+        //this.api.getPokemons(this.listOffset, function(data) { self.pokemonsReceived(data) });
+    },
+    pokemonsReceived: function(pokemons) {
 
         var pokelist = $('#pokelist');
 
@@ -50,7 +66,7 @@ PokelistController.prototype = {
                 theme: 'b'
             });
 
-            this.api.getPokemons(this.listOffset, function(data) { self.pokemonsReceived(data) });
+            this.fetchPokemons();
         }
     }
 }

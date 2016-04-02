@@ -1,9 +1,9 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        this.api = new API();
-        this.databasecontroller = new DatabaseController();
-        this.pokelistcontroller = new PokelistController(this.api);
+        this.api = new API(this);
+        this.databasecontroller = new DatabaseController(this.api);
+        this.pokelistcontroller = new PokelistController(this.api, this.databasecontroller);
         this.pokemoncontroller = new PokemonController(this.api);
         this.catchcontroller = new CatchController(this.api, this.databasecontroller);
 
