@@ -19,9 +19,7 @@ PokelistController.prototype = {
     fetchPokemons: function() {
         var self = this;
 
-        console.log('database get pokemons');
         this.databasecontroller.getPokemons(function(pokemons) {
-            console.log('database callback');
             if(pokemons) {
                 self.pokemonsReceived(pokemons);
             } else {
@@ -37,13 +35,11 @@ PokelistController.prototype = {
 
         for(var i = 0; i < pokemons.length; i++) {
             var pokemon = pokemons[i];
-            pokelist.append('<li><a href="pokemonview.html?name=' + pokemon.name + '&id=' + pokemon.id + '&url=' + pokemon.url + '"><img src="' + pokemon.image + '"/>' + pokemon.name + '</a></li>');
+            pokelist.append('<li><a data-transition="slideup" href="pokemonview.html?name=' + pokemon.name + '&id=' + pokemon.id + '&url=' + pokemon.url + '"><img src="' + pokemon.image + '"/>' + pokemon.name + '</a></li>');
         }
         pokelist.listview("refresh");
         this.updating = false;
         $.mobile.loading("hide");
-        //this.tabcontroller.addListeners();
-
     },
     onSrollChange: function() {
         if (this.updating) return;

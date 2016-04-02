@@ -28,9 +28,12 @@ API.prototype = {
             callback(results);
         });
     },
-    getPokemon: function(url, callback) {
-        $.getJSON(url, function(data) {
-            callback(data);
+    getPokemon: function(id, callback) {
+        var self = this;
+        $.getJSON(this.getPokemonUrl(id), function(pokemon) {
+            pokemon.id = id;
+            self.app.databasecontroller.cachePokemonData(pokemon);
+            callback(pokemon);
         });
     },
     getPokemonUrl: function(id) {

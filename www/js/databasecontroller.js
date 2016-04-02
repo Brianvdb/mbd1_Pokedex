@@ -13,7 +13,7 @@ DatabaseController.prototype = {
             trans.executeSql("CREATE TABLE IF NOT EXISTS secretpokemon (lat, lng, pokemon_id, pokemon_name, location, found)");
             trans.executeSql("CREATE TABLE IF NOT EXISTS pokemon (id, name, base_experience, height, is_default, order_nr, weight)");
             self.getSecretPokemons(); // populates data if table is empty
-        }, function(err) { console.log(err.message )});
+        }, function(err) { self.onDatabaseError(undefined, err) });
     },
 
     getSecretPokemons: function(callback) {
@@ -28,7 +28,7 @@ DatabaseController.prototype = {
                     if(callback) callback(results);
                 }
             });
-        });
+        }, function(err) { self.onDatabaseError(callback, err) });
     },
 
     addSecretPokemons: function(callback) {
@@ -56,7 +56,7 @@ DatabaseController.prototype = {
             }
 
             self.getSecretPokemons(callback);
-        });
+        }, self.onDatabaseError);
     },
 
     foundSecretPokemon: function(callback, pokemon) {
@@ -64,7 +64,7 @@ DatabaseController.prototype = {
         this.db.transaction(function(trans) {
             trans.executeSql('UPDATE secretpokemon SET found=1 WHERE pokemon_id=?', [pokemon.pokemon_id]);
             self.getSecretPokemons(callback);
-        });
+        }, function(err) { self.onDatabaseError(callback, err) });
     },
 
     cachePokemons: function(pokemons) {
@@ -74,7 +74,7 @@ DatabaseController.prototype = {
                 var pokemon = pokemons[i];
                 trans.executeSql('INSERT INTO pokemon (id, name) VALUES (?,?)', [pokemon.id, pokemon.name]);
             }
-        });
+        }, function(err) { self.onDatabaseError(undefined, err) });
     },
 
     getPokemons: function(callback, offset) {
@@ -96,6 +96,44 @@ DatabaseController.prototype = {
                 }
 
             });
-        }, function(err) { console.log(err.message); });
+        }, function(err) { self.onDatabaseError(callback, err) });
+    },
+
+    cachePokemonData: function(pokemon) {
+        var self = this;
+        this.db.transaction(function(trans) {
+            trans.executeSql(
+                'UPDATE pokemon SET base_experience=?, height=?, is_default=?, order_nr=?, weight=? WHERE id=?',
+                [pokemon.base_experience, pokemon.height, pokemon.is_default, pokemon.order, pokemon.weight, pokemon.id]
+            );
+        }, function(err) { self.onDatabaseError(undefined, err) });
+    },
+
+    getPokemon: function(callback, id) {
+        var self = this;
+        this.db.transaction(function(trans) {
+            trans.executeSql('SELECT * FROM pokemon WHERE id=?', [id], function(trans, results) {
+                var length = results.rows.length;
+                if(length == 0) {
+                    callback(undefined);
+                } else {
+                    var pokemon = results.rows.item(0);
+                    // only return this pokemon if all data is known
+                    if(!pokemon.order_nr) {
+                        callback(undefined);
+                        return;
+                    }
+                    pokemon.url = self.api.getPokemonUrl(pokemon.id);
+                    pokemon.image = self.api.getPokemonImageUrl(pokemon.id);
+                    pokemon.order = pokemon.order_nr;
+                    callback(pokemon);
+                }
+            });
+        }, function(err) { self.onDatabaseError(callback, err) });
+    },
+
+    onDatabaseError: function(callback, err) {
+        if(callback) callback(undefined);
+        console.log('database error: ' + err.message);
     }
-}
+};

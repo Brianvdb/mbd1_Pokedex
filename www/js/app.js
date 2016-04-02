@@ -2,14 +2,16 @@ var app = {
     // Application Constructor
     initialize: function() {
         this.api = new API(this);
+
+        // init controllers
         this.databasecontroller = new DatabaseController(this.api);
         this.pokelistcontroller = new PokelistController(this.api, this.databasecontroller);
-        this.pokemoncontroller = new PokemonController(this.api);
+        this.pokemoncontroller = new PokemonController(this.api, this.databasecontroller);
         this.catchcontroller = new CatchController(this.api, this.databasecontroller);
-
         this.tabcontroller = new TabController(this.catchcontroller);
+
+        // binds events
         this.bindEvents();
-        this.listOffset = 0;
 
         $.urlParam = this.getParameterByName;
     },
