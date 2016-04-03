@@ -15,7 +15,7 @@ function LanguageController() {
     this.translations['is_default'] = {english: 'is default', dutch: 'is standaard', german: 'ist standard'};
     this.translations['secret_pokemon'] = {english: 'Secret pokemon', dutch: 'Geheime pokemon', german: 'Geheimnis pokemon'};
     this.translations['secret_pokemon_notfound'] = {english: 'You have not found this pokemon yet!', dutch: 'Je hebt deze pokemon nog niet gevonden!', german: 'Sie haben nicht dieses Pokemon gefunden!'};
-    this.translations['back'] = {english: 'Back', dutch: 'Terug', german: 'Zurück'}
+    this.translations['back'] = {english: 'Back', dutch: 'Terug', german: 'Zurück'};
 
     this.language = 'german';
 }

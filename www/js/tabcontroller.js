@@ -39,5 +39,8 @@ TabController.prototype = {
         if(tab == '#tab2') {
             this.catchcontroller.init();
         }
+        if(tab == '#tab3') {
+            window.plugins.socialsharing.share('message');
+        }
     }
-}
+};
