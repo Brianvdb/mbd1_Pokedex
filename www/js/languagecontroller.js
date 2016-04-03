@@ -5,7 +5,6 @@ function LanguageController() {
     this.translations = [];
     this.translations['tab_pokemons'] = {english: 'Pokemons', dutch: 'Pokemons', german: 'Pokemons'};
     this.translations['tab_catch'] = {english: 'Catch', dutch: 'Vangen', german: 'Fangen'};
-    this.translations['tab_trade'] = {english: 'Trade', dutch: 'Ruilen', german: 'Austausch'};
     this.translations['settings'] = {english: 'Settings', dutch: 'Instellingen', german: 'Einstellungen'};
     this.translations['nav_pokemon'] = {english: 'Go to pokemon', dutch: 'Ga naar pokemon', german: 'Geh zu pokemon'};
     this.translations['order'] = {english: 'order', dutch: 'volgorde', german: 'ordnung'};
