@@ -23,12 +23,8 @@ var app = {
     bindEvents: function() {
         var self = this;
         document.addEventListener('deviceready', function() { self.onDeviceReady() }, false);
-        $(document).on("pagecontainerbeforeshow", function(event, ui) { self.onPageLoaded(event, ui) });
-
-        // we need to
-        $(document).on('pageshow', '#map-page', function() {
-            self.navigatecontroller.loadMap();
-        });
+        $(document).on("pagecontainerbeforeshow", function(event, ui) { self.onPageBeforeShow(event, ui) });
+        $(document).on('pagecontainershow', function(event, ui) { self.onPageShow(event, ui) });
     },
     onDeviceReady: function() {
         //navigator.splashscreen.show();
@@ -36,7 +32,7 @@ var app = {
         this.tabcontroller.init();
         this.pokelistcontroller.init();
     },
-    onPageLoaded: function(event, ui) {
+    onPageBeforeShow: function(event, ui) {
         var id = ui.toPage[0].id;
         console.log('page: ' + id);
         if (id == 'pokemonview') {
@@ -46,9 +42,16 @@ var app = {
             var id = $.urlParam(url, 'id');
             this.pokemoncontroller.loadPokemon(name, id, apiUrl);
         }
-
-        if (id == 'navigatepokemon') {
-            //this.navigatecontroller.loadMap();
+    },
+    onPageShow: function(event, ui) {
+        var id = ui.toPage[0].id;
+        console.log('pagecontainershow' + id);
+        if(id == 'map-page') {
+            var url = ui.toPage.data('url');
+            console.log('url: ' + url);
+            var lat = $.urlParam(url, 'lat');
+            var lng = $.urlParam(url, 'lng');
+            this.navigatecontroller.loadMap(lat, lng);
         }
     },
     getParameterByName: function(url, name) {
@@ -60,11 +63,3 @@ var app = {
         }
     }
 };
-
-function initMap() {
-    console.log('init map');
-    /*map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 8
-    });*/
-}

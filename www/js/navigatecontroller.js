@@ -6,19 +6,50 @@ function NavigateController() {
 }
 
 NavigateController.prototype = {
-    loadMap: function() {
-        var latlng = new google.maps.LatLng(34.0983425, -118.3267434);
-        var myOptions = {
-            zoom: 10,
-            center: latlng,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+    loadMap: function (lat, lng) {
+        this.lat = lat;
+        this.lng = lng;
+        this.directionsDisplay = new google.maps.DirectionsRenderer;
+        this.directionsService = new google.maps.DirectionsService;
+
+        var latlng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+        var options = {
+            zoom: 16,
+            center: latlng
         };
-        var map = new google.maps.Map(document.getElementById("map-canvas"), myOptions);
+        this.map = new google.maps.Map(document.getElementById("map-canvas"), options);
         // Add an overlay to the map of current lat/lng
-        var marker = new google.maps.Marker({
+        this.marker = new google.maps.Marker({
             position: latlng,
-            map: map,
-            title: "Greetings!"
+            map: this.map,
+            title: "Secret Pokemon!"
+        });
+        this.directionsDisplay.setMap(this.map);
+
+        this.generateRoute();
+    },
+    generateRoute: function () {
+        var self = this;
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var currentLat = position.coords.latitude;
+            var currentLng = position.coords.longitude;
+            console.log('got current position');
+            self.calculateRoute(currentLat, currentLng);
+        });
+    },
+    calculateRoute: function (currentLat, currentLng) {
+        var self = this;
+        var selectedMode = document.getElementById('mode').value;
+        this.directionsService.route({
+            origin: {lat: currentLat, lng: currentLng},
+            destination: {lat: this.lat, lng: this.lng},
+            travelMode: google.maps.TravelMode[selectedMode]
+        }, function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                self.directionsDisplay.setDirections(response);
+            } else {
+                console.log('Directions request failed due to ' + status);
+            }
         });
     }
 }
