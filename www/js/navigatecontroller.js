@@ -39,11 +39,10 @@ NavigateController.prototype = {
     },
     calculateRoute: function (currentLat, currentLng) {
         var self = this;
-        var selectedMode = document.getElementById('mode').value;
         this.directionsService.route({
             origin: {lat: currentLat, lng: currentLng},
             destination: {lat: this.lat, lng: this.lng},
-            travelMode: google.maps.TravelMode[selectedMode]
+            travelMode: google.maps.TravelMode['WALKING']
         }, function (response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
                 self.directionsDisplay.setDirections(response);
