@@ -8,6 +8,7 @@ var app = {
         this.pokelistcontroller = new PokelistController(this.api, this.databasecontroller);
         this.pokemoncontroller = new PokemonController(this.api, this.databasecontroller);
         this.catchcontroller = new CatchController(this.api, this.databasecontroller);
+        this.navigatecontroller = new NavigateController();
         this.tabcontroller = new TabController(this.catchcontroller);
 
         // binds events
@@ -33,12 +34,16 @@ var app = {
     onPageLoaded: function(event, ui) {
         var id = ui.toPage[0].id;
         console.log('page: ' + id);
-        if ( ui.toPage[0].id == 'pokemonview') {
+        if (id == 'pokemonview') {
             var url = ui.toPage.data('url');
             var name = $.urlParam(url, 'name');
             var apiUrl = $.urlParam(url, 'url');
             var id = $.urlParam(url, 'id');
             this.pokemoncontroller.loadPokemon(name, id, apiUrl);
+        }
+
+        if (id == 'navigatepokemon') {
+            this.navigatecontroller.loadMap();
         }
     },
     getParameterByName: function(url, name) {
@@ -50,3 +55,11 @@ var app = {
         }
     }
 };
+
+function initMap() {
+    console.log('init map');
+    /*map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 8
+    });*/
+}

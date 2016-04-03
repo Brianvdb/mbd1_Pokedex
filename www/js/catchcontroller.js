@@ -27,7 +27,7 @@ CatchController.prototype = {
         for(i = 0; i < this.secretpokemons.length; i++) {
             var pokemon = this.secretpokemons[i];
             if (pokemon.found == 0) {
-                catchlist.append('<li><img src="img/secret-pokemon.png"/><h2>Geheime pokemon</h2><p>Je hebt deze pokemon nog niet gevonden!</p></li>');
+                catchlist.append('<li><a href="navigatepokemon.html"><img src="img/secret-pokemon.png"/><h2>Geheime pokemon</h2><p>Je hebt deze pokemon nog niet gevonden!</p></a></li>');
             } else {
                 var url = this.api.getPokemonUrl(pokemon.pokemon_id);
                 var imageUrl = this.api.getPokemonImageUrl(pokemon.pokemon_id);
