@@ -1,9 +1,10 @@
 /**
  * Created by Gebruiker on 1-4-2016.
  */
-function PokemonController(api, databasecontroller) {
+function PokemonController(api, databasecontroller, languagecontroller) {
     this.api = api;
     this.databasecontroller = databasecontroller;
+    this.languagecontroller = languagecontroller;
 }
 
 PokemonController.prototype = {
@@ -30,11 +31,13 @@ PokemonController.prototype = {
 
         var details = $('#pokedetails');
 
-        details.append('<li>order: ' + pokemon.order + '</li>');
-        details.append('<li>experience: ' + pokemon.base_experience + '</li>');
-        details.append('<li>weight: ' + pokemon.weight + '</li>');
-        details.append('<li>height: ' + pokemon.height + '</li>');
-        details.append('<li>is default: ' + pokemon.is_default + '</li>');
+        details.append('<li><span data-localized="order"></span>: ' + pokemon.order + '</li>');
+        details.append('<li><span data-localized="experience"></span>: ' + pokemon.base_experience + '</li>');
+        details.append('<li><span data-localized="weight"></span>: ' + pokemon.weight + '</li>');
+        details.append('<li><span data-localized="height"></span>: ' + pokemon.height + '</li>');
+        details.append('<li><span data-localized="is_default"></span>: ' + pokemon.is_default + '</li>');
+
+        this.languagecontroller.invalidate();
 
         details.listview('refresh');
 

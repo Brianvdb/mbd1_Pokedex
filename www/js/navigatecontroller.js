@@ -30,16 +30,13 @@ NavigateController.prototype = {
     },
     generateRoute: function () {
         var self = this;
-        console.log('generate route');
         navigator.geolocation.getCurrentPosition(function (position) {
             var currentLat = position.coords.latitude;
             var currentLng = position.coords.longitude;
-            console.log('got current position');
             self.calculateRoute(currentLat, currentLng);
         }, function(error) { console.log('error: ' + error.message)});
     },
     calculateRoute: function (currentLat, currentLng) {
-        console.log('calculate route');
         var self = this;
         this.directionsService.route({
             origin: {lat: currentLat, lng: currentLng},

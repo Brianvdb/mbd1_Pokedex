@@ -14,13 +14,13 @@
 <div data-role="page" id="home">
     <div data-role="tabs">
         <div data-role="header">
-            <a href="settings.html" class="ui-btn-right" data-icon="gear">Settings</a>
+            <a href="settings.html" class="ui-btn-right" data-icon="gear" data-localized="settings"></a>
             <h1 id="header-title">Pokedex</h1>
             <div data-role="navbar">
                 <ul>
-                    <li><a href="#pokemonlist" class="ui-btn-active ui-state-persist">Pokemons</a></li>
-                    <li><a href="#tab2">Vangen</a></li>
-                    <li><a href="#tab3">Ruilen</a></li>
+                    <li><a href="#pokemonlist" class="ui-btn-active ui-state-persist" data-localized="tab_pokemons"></a></li>
+                    <li><a href="#tab2" data-localized="tab_catch"></a></li>
+                    <li><a href="#tab3" data-localized="tab_trade"></a></li>
                 </ul>
             </div>
         </div>
@@ -49,6 +49,7 @@
 <script type="text/javascript" src="js/catchcontroller.js"></script>
 <script type="text/javascript" src="js/databasecontroller.js"></script>
 <script type="text/javascript" src="js/navigatecontroller.js"></script>
+<script type="text/javascript" src="js/languagecontroller.js"></script>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUPMulDSxD5nNSr8VG5LNsLI6hzQ-5wLU&sensor=false"></script>
