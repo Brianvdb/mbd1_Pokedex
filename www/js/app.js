@@ -25,6 +25,7 @@ var app = {
         $(document).on("pagecontainerbeforeshow", function(event, ui) { self.onPageLoaded(event, ui) });
     },
     onDeviceReady: function() {
+        //navigator.splashscreen.show();
         this.databasecontroller.init();
         this.tabcontroller.init();
         this.pokelistcontroller.init();
