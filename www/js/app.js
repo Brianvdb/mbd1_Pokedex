@@ -24,6 +24,11 @@ var app = {
         var self = this;
         document.addEventListener('deviceready', function() { self.onDeviceReady() }, false);
         $(document).on("pagecontainerbeforeshow", function(event, ui) { self.onPageLoaded(event, ui) });
+
+        // we need to
+        $(document).on('pageshow', '#map-page', function() {
+            self.navigatecontroller.loadMap();
+        });
     },
     onDeviceReady: function() {
         //navigator.splashscreen.show();
@@ -43,7 +48,7 @@ var app = {
         }
 
         if (id == 'navigatepokemon') {
-            this.navigatecontroller.loadMap();
+            //this.navigatecontroller.loadMap();
         }
     },
     getParameterByName: function(url, name) {
