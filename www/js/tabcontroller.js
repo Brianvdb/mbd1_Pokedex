@@ -23,7 +23,7 @@ TabController.prototype = {
     },
     changeNavTab: function (left) {
         var $tabs = $("div[data-role=navbar] li a", $("div[data-role=page].ui-page-active"));
-        var curidx = $tabs.closest("a.ui-btn-active").parent().index();
+        var curidx = $tabs.closest("a.ui-state-persist").parent().index();
         var nextidx = 0;
         if (left) {
             if(curidx == $tabs.length - 1) return;
