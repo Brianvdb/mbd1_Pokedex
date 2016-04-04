@@ -36,6 +36,8 @@ TabController.prototype = {
     },
     onTabChanged: function(element) {
         var tab = $(element).attr('href');
+        $('div[data-role=navbar] li a').removeClass('ui-state-persist');
+        $(element).addClass('ui-state-persist');
         if(tab == '#tab2') {
             this.catchcontroller.init();
         }

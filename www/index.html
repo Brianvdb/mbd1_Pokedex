@@ -6,17 +6,17 @@
     <meta name="msapplication-tap-highlight" content="no"/>
     <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.css"/>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
     <title>Pokedex</title>
 </head>
 <body>
 <div data-role="page" id="home">
     <div data-role="tabs">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed" data-tap-toggle="false">
             <a href="settings.html" class="ui-btn-right" data-icon="gear" data-localized="settings"></a>
             <h1 id="header-title">Pokedex</h1>
-            <div data-role="navbar">
+            <div data-role="navbar" data-tap-toggle="false">
                 <ul>
                     <li><a href="#pokemonlist" class="ui-btn-active ui-state-persist" data-localized="tab_pokemons"></a></li>
                     <li><a href="#tab2" data-localized="tab_catch"></a></li>
@@ -46,8 +46,8 @@
 <script type="text/javascript" src="js/databasecontroller.js"></script>
 <script type="text/javascript" src="js/navigatecontroller.js"></script>
 <script type="text/javascript" src="js/languagecontroller.js"></script>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/jquery.mobile-1.4.5.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUPMulDSxD5nNSr8VG5LNsLI6hzQ-5wLU&sensor=false"></script>
 <script type="text/javascript">
     app.initialize();

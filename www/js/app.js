@@ -26,6 +26,10 @@ var app = {
         document.addEventListener('deviceready', function() { self.onDeviceReady() }, false);
         $(document).on("pagecontainerbeforeshow", function(event, ui) { self.onPageBeforeShow(event, ui) });
         $(document).on('pagecontainershow', function(event, ui) { self.onPageShow(event, ui) });
+        navigator.globalization.getPreferredLanguage(
+            function (language) {alert('language: ' + language.value + '\n');},
+            function () {alert('Error getting language\n');}
+        );
     },
     onDeviceReady: function() {
         this.databasecontroller.init();
